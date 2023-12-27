@@ -35,13 +35,64 @@ function isDuplicateId(id) {
     return games.some(game => game.ID === id);
 }
 
+function displayErrorMessages(errorMessages) {
+    alert(errorMessages.join("\n"));
+
+    // Hibaüzenetekhez tartozó stílusok beállítása
+    errorMessages.forEach(errorMessage => {
+        if (errorMessage.includes("Az ID mező")) {
+            $("#gameId").css("border-color", "red");
+        } else if (errorMessage.includes("A Név mező")) {
+            $("#gameName").css("border-color", "red");
+        } else if (errorMessage.includes("A Teszt Dátuma mező")) {
+            $("#testDate").css("border-color", "red");
+        }
+        // További stílusbeállítások a többi elemhez...
+    });
+}
+
 function addGame() {
-    const gameId = $("#gameId").val();
-    const gameName = $("#gameName").val();
-    const isDigital = $("#digitalCheckbox").prop("checked");
-    const testDate = $("#testDate").val();
-    const gameStatus = $("#gameStatus").val();
-    const backgroundColor = $("#backgroundColor").val();
+    const gameIdInput = $("#gameId");
+    const gameNameInput = $("#gameName");
+    const digitalCheckbox = $("#digitalCheckbox");
+    const testDateInput = $("#testDate");
+    const gameStatusInput = $("#gameStatus");
+    const backgroundColorInput = $("#backgroundColor");
+
+    const errorMessages = [];
+
+    if (!gameIdInput.val() || !isValidIdFormat(gameIdInput.val())) {
+        errorMessages.push("Az ID mező kitöltése kötelező és a formátum nem megfelelő (pl., CUSA12345).");
+        gameIdInput.css("border-color", "red");
+    } else {
+        gameIdInput.css("border-color", "");
+    }
+
+    if (!gameNameInput.val()) {
+        errorMessages.push("A Név mező kitöltése kötelező.");
+        gameNameInput.css("border-color", "red");
+    } else {
+        gameNameInput.css("border-color", "");
+    }
+
+    if (!testDateInput.val()) {
+        errorMessages.push("A Teszt Dátuma mező kitöltése kötelező.");
+        testDateInput.css("border-color", "red");
+    } else {
+        testDateInput.css("border-color", "");
+    }
+
+    if (errorMessages.length > 0) {
+        displayErrorMessages(errorMessages);
+        return;
+    }
+
+    const gameId = gameIdInput.val();
+    const gameName = gameNameInput.val();
+    const isDigital = digitalCheckbox.prop("checked");
+    const testDate = testDateInput.val();
+    const gameStatus = gameStatusInput.val();
+    const backgroundColor = backgroundColorInput.val();
 
     if (gameId && gameName && isValidIdFormat(gameId) && !isDuplicateId(gameId)) {
         const newGame = {
@@ -50,31 +101,32 @@ function addGame() {
             Digitális: isDigital,
             TesztDátuma: testDate,
             Státusz: gameStatus,
-            Háttérszín: backgroundColor
+            Háttérszín: backgroundColor || "#ffffff"
         };
 
         games.push(newGame);
 
-        // Frissítjük a localStorage-ot
         localStorage.setItem("games", JSON.stringify(games));
 
         updateGamesList();
 
-        $("#gameId").val("");
-        $("#gameName").val("");
-        $("#digitalCheckbox").prop("checked", false);
-        $("#testDate").val("");
-        $("#gameStatus").val("Playable");
-        $("#backgroundColor").val("#ffffff");
+        gameIdInput.val("");
+        gameNameInput.val("");
+        digitalCheckbox.prop("checked", false);
+        testDateInput.val("");
+        gameStatusInput.val("Playable");
+        backgroundColorInput.val("#ffffff");
     } else {
         if (isDuplicateId(gameId)) {
             alert("Ez az ID már létezik. Kérlek, adj meg egy másikat!");
         } else {
-            alert("Kérlek, ellenőrizd az ID formátumát és töltsd ki az összes mezőt!");
+            alert("Kérlek, ellenőrizd az ID formátumát, töltsd ki az összes mezőt, és válassz ki egy Teszt Dátumot!");
         }
     }
 }
 
 $(document).ready(() => {
+    const backgroundColorInput = $("#backgroundColor");
+    backgroundColorInput.val("#ffffff");
     updateGamesList();
 });
