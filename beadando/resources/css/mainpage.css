@@ -3,19 +3,14 @@ body {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  /* Eltávolítjuk az oldalsáv görgetését */
 }
 
 .header {
   background: linear-gradient(180deg, #87CEFA, #0f4674);
-  /* Világoskék és sötétkék gradient háttér */
   text-align: center;
   padding: 20px;
   color: white;
   font-size: 2em;
-
-  /* CSS animáció a háttér színváltásához */
-  animation: backgroundAnimation 2s infinite;
 }
 
 ul {
@@ -24,9 +19,7 @@ ul {
   padding: 0;
   overflow: hidden;
   background: linear-gradient(0deg, #87CEFA, #4682B4);
-  /* Vízszintes gradient háttér a menühöz */
   text-align: center;
-  /* Középre igazítás */
 }
 
 li {
@@ -44,19 +37,4 @@ li a {
 
 li a:hover {
   background-color: #4682B4;
-}
-
-/* CSS animáció a háttér színváltásához */
-@keyframes backgroundAnimation {
-  0% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 100% 50%;
-  }
-
-  100% {
-    background-position: 0% 50%;
-  }
 }

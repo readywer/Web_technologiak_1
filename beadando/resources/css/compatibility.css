@@ -32,7 +32,6 @@ input,
 select,
 button {
     width: calc(100% - 16px);
-    /* 100% szélesség mínusz padding (8px mindkét oldalon) és border (1px mindkét oldalon) */
     padding: 8px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
@@ -79,9 +78,7 @@ ul {
     padding: 0;
     overflow: hidden;
     background: linear-gradient(0deg, #87CEFA, #4682B4);
-    /* Vízszintes gradient háttér a menühöz */
     text-align: center;
-    /* Középre igazítás */
 }
 
 li {
