@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compatibility Page</title>
+    <link rel="stylesheet" href="resources/css/compatibility.css">
+</head>
+
+<body>
+    <ul>
+        <li><a href="home.html">Kezdőlap</a></li>
+        <li><a href="compatibility.html">Kompatibilitás</a></li>
+        <li><a href="download.html">Letöltés</a></li>
+        <li><a href="FAQS.html">FAQs</a></li>
+    </ul>
+
+    <div class="container">
+        <h1>Kompatibilitási lista</h1>
+        <div class="form-container">
+            <label for="gameId">ID:</label>
+            <input type="text" id="gameId" placeholder="Enter ID (e.g., CUSA12345)" pattern="CUSA\d{5}"
+                title="ID must start with CUSA and have 5 digits" required>
+
+            <label for="gameName">Név:</label>
+            <input type="text" id="gameName" placeholder="Enter Név" required>
+
+            <div class="additional-fields">
+                <label for="digitalCheckbox">Digitális:</label>
+                <input type="checkbox" id="digitalCheckbox">
+
+                <label for="testDate">Teszt Dátuma:</label>
+                <input type="date" id="testDate">
+            </div>
+
+            <div class="additional-fields">
+                <label for="gameStatus">Státusz:</label>
+                <select id="gameStatus" required>
+                    <option value="Playable">Playable</option>
+                    <option value="Ingame">Ingame</option>
+                    <option value="Intro">Intro</option>
+                    <option value="Loadable">Loadable</option>
+                    <option value="Nothing">Nothing</option>
+                </select>
+
+                <label for="backgroundColor">Háttérszín:</label>
+                <input type="color" id="backgroundColor">
+            </div>
+            
+            <button onclick="addGame()">Hozzáadás</button>
+        </div>
+
+        <div class="games-container">
+            <h2>Felvitt Játékok</h2>
+            <table id="gamesTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Név</th>
+                        <th>Digitális</th>
+                        <th>Teszt Dátuma</th>
+                        <th>Státusz</th>
+                    </tr>
+                </thead>
+                <tbody id="gamesList"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
