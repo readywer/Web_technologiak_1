@@ -2,7 +2,7 @@ const defaultGame = {
     ID: "CUSA03682",
     Név: "Gran Turismo®SPORT",
     Digitális: false,
-    TesztDátuma: "",
+    TesztDátuma: "2023.12.27",
     Státusz: "Ingame",
     Háttérszín: "#ffffff"
 };
@@ -61,68 +61,100 @@ function addGame() {
 
     const errorMessages = [];
 
-    if (!gameIdInput.val() || !isValidIdFormat(gameIdInput.val())) {
+    const gameId = gameIdInput.val();
+    const gameName = gameNameInput.val();
+    const isDigital = digitalCheckbox.prop("checked");
+    const testDate = testDateInput.val();
+    const gameStatus = gameStatusInput.val();
+    const backgroundColor = backgroundColorInput.val() || "#ffffff";
+
+    // Ellenőrzés, hogy az adott ID-jű játék már létezik-e
+    const existingGameIndex = games.findIndex(game => game.ID === gameId);
+
+    if (existingGameIndex !== -1) {
+        // Már létezik, frissítjük az adatokat
+        games[existingGameIndex] = {
+            ID: gameId,
+            Név: gameName,
+            Digitális: isDigital,
+            TesztDátuma: testDate,
+            Státusz: gameStatus,
+            Háttérszín: backgroundColor
+        };
+
+        // Frissítjük a localStorage-ot
+        localStorage.setItem("games", JSON.stringify(games));
+
+        updateGamesList();
+
+        // Töröljük az input mezők tartalmát
+        clearInputFields();
+
+        return;
+    }
+
+    // Az ID mező ellenőrzése
+    if (!gameId || !isValidIdFormat(gameId)) {
         errorMessages.push("Az ID mező kitöltése kötelező és a formátum nem megfelelő (pl., CUSA12345).");
         gameIdInput.css("border-color", "red");
     } else {
         gameIdInput.css("border-color", "");
     }
 
-    if (!gameNameInput.val()) {
+    // A Név mező ellenőrzése
+    if (!gameName) {
         errorMessages.push("A Név mező kitöltése kötelező.");
         gameNameInput.css("border-color", "red");
     } else {
         gameNameInput.css("border-color", "");
     }
 
-    if (!testDateInput.val()) {
+    // A Teszt Dátuma mező ellenőrzése
+    if (!testDate) {
         errorMessages.push("A Teszt Dátuma mező kitöltése kötelező.");
         testDateInput.css("border-color", "red");
     } else {
         testDateInput.css("border-color", "");
     }
 
+    // További ellenőrzések...
+
     if (errorMessages.length > 0) {
         displayErrorMessages(errorMessages);
         return;
     }
 
-    const gameId = gameIdInput.val();
-    const gameName = gameNameInput.val();
-    const isDigital = digitalCheckbox.prop("checked");
-    const testDate = testDateInput.val();
-    const gameStatus = gameStatusInput.val();
-    const backgroundColor = backgroundColorInput.val();
+    // Új játék hozzáadása a listához
+    const newGame = {
+        ID: gameId,
+        Név: gameName,
+        Digitális: isDigital,
+        TesztDátuma: testDate,
+        Státusz: gameStatus,
+        Háttérszín: backgroundColor
+    };
 
-    if (gameId && gameName && isValidIdFormat(gameId) && !isDuplicateId(gameId)) {
-        const newGame = {
-            ID: gameId,
-            Név: gameName,
-            Digitális: isDigital,
-            TesztDátuma: testDate,
-            Státusz: gameStatus,
-            Háttérszín: backgroundColor || "#ffffff"
-        };
+    games.push(newGame);
 
-        games.push(newGame);
+    // Frissítjük a localStorage-ot
+    localStorage.setItem("games", JSON.stringify(games));
 
-        localStorage.setItem("games", JSON.stringify(games));
+    updateGamesList();
 
-        updateGamesList();
+    // Töröljük az input mezők tartalmát
+    clearInputFields();
+}
 
-        gameIdInput.val("");
-        gameNameInput.val("");
-        digitalCheckbox.prop("checked", false);
-        testDateInput.val("");
-        gameStatusInput.val("Playable");
-        backgroundColorInput.val("#ffffff");
-    } else {
-        if (isDuplicateId(gameId)) {
-            alert("Ez az ID már létezik. Kérlek, adj meg egy másikat!");
-        } else {
-            alert("Kérlek, ellenőrizd az ID formátumát, töltsd ki az összes mezőt, és válassz ki egy Teszt Dátumot!");
-        }
-    }
+function clearInputFields() {
+    $("#gameId").val("");
+    $("#gameName").val("");
+    $("#digitalCheckbox").prop("checked", false);
+    $("#testDate").val("");
+    $("#gameStatus").val("Playable");
+    $("#backgroundColor").val("#ffffff");
+
+    // Törlés után az összes mezőről eltávolítjuk a piros keretet
+    $("input, select").css("border-color", "");
 }
 
 $(document).ready(() => {
