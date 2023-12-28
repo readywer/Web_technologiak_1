@@ -2,8 +2,6 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  overflow: hidden;
-  background: #4682B4;
 }
 
 #menu {
@@ -33,14 +31,13 @@ body {
 }
 
 .header {
-  background: linear-gradient(180deg, #87CEFA, #4682B4);
   text-align: center;
   padding: 20px;
   color: white;
   font-size: 2em;
 }
 
-.main{
+.main {
   padding: 1% 5%;
   color: white;
 }
