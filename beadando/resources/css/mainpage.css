@@ -3,17 +3,10 @@ body {
   margin: 0;
   padding: 0;
   overflow: hidden;
+  background: #4682B4;
 }
 
-.header {
-  background: linear-gradient(180deg, #87CEFA, #0f4674);
-  text-align: center;
-  padding: 20px;
-  color: white;
-  font-size: 2em;
-}
-
-ul {
+#menu {
   list-style-type: none;
   margin: 0;
   padding: 0;
@@ -22,11 +15,11 @@ ul {
   text-align: center;
 }
 
-li {
+#menu li {
   display: inline-block;
 }
 
-li a {
+#menu li a {
   display: block;
   color: white;
   text-align: center;
@@ -35,6 +28,19 @@ li a {
   font-size: 1.5em;
 }
 
-li a:hover {
+#menu li a:hover {
   background-color: #4682B4;
+}
+
+.header {
+  background: linear-gradient(180deg, #87CEFA, #4682B4);
+  text-align: center;
+  padding: 20px;
+  color: white;
+  font-size: 2em;
+}
+
+.main{
+  padding: 1% 5%;
+  color: white;
 }
